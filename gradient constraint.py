@@ -34,8 +34,8 @@ def gradient(f, g, x0, y0):
         
 
 
-        dfdx0 = dfdx.subs([(x, float(x0)), (y, float(y0))])
-        dfdy0 = dfdy.subs([(x, float(x0)), (y, float(y0))])
+        dfdx0 = dfdx.subs([(x, x0), (y, y0)])
+        dfdy0 = dfdy.subs([(x, x0), (y, y0)])
         # print(dfdx0)
         # print(dfdy0)
 
@@ -67,7 +67,9 @@ def gradient(f, g, x0, y0):
         i += 1
         #print(xmin)
         #print(x0)
-        if dfdx0 == 0 and dfdy == 0:
+        dfdx0 = dfdx.subs([(x, float(x0)), (y, float(y0))])
+        dfdy0 = dfdy.subs([(x, float(x0)), (y, float(y0))])
+        if dfdx0 == 0 and dfdy0 == 0:
             c = 0
         #print(float(xant))
         #print(float(x0))

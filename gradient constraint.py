@@ -6,9 +6,13 @@ import numpy as np
 from numpy import *
 from matplotlib.pyplot import *
 from sympy import symbols, solve, Eq
-
+import time
 x, y = sp.symbols('x y')
+
+
 def gradient(f, g, x0, y0):
+    start_time = time.time()
+
     i=1
     c=1
     xant = x0
@@ -19,7 +23,8 @@ def gradient(f, g, x0, y0):
     X, Y = np.meshgrid(xlist, ylist)
     Z = np.sqrt((X-3)**2 + (Y-2)**2)
     fig,ax=plt.subplots(1,1)
-    cp = ax.contourf(X, Y, Z)
+    cp = ax.contour(X, Y, Z)
+    plt.clabel(cp, inline=True, fontsize=8)
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     ax.set_title('Curvas de nivel')
@@ -27,61 +32,58 @@ def gradient(f, g, x0, y0):
     while c != 0:
         print("-----------------------------", i,"-----------------------------")
         u = sp.Symbol('u')
-        #f = f + u*1/g
-        #print(f)
+        u = 0.5
+        f = f + u*g
+        print(f)
         dfdx = sp.diff(f, x)
         dfdy = sp.diff(f, y)
         
-
-
         dfdx0 = dfdx.subs([(x, x0), (y, y0)])
         dfdy0 = dfdy.subs([(x, x0), (y, y0)])
-        # print(dfdx0)
-        # print(dfdy0)
 
         a = sp.Symbol('a')
         x1 = x0 - a*dfdx0
         y1 = y0 - a*dfdy0
-        #print(x1)
-        #print(y1)
-        #print(type(x1))
+
         fa = f.subs([(x, x1), (y, y1)])
-        #print(fa)
+
         dfda = sp.diff(fa, a)
-        #print(dfda)
 
         eq = Eq(dfda, 0)
         a = solve(eq)
-        #print(type(a))
         
         x0 = x0 - a[0]*dfdx0
         y0 = y0 - a[0]*dfdy0
 
         xpoints = np.array([x0, xant])
         ypoints = np.array([y0, yant])
-       
+        
         plt.plot(xpoints, ypoints)
         
         print("x = ", float(x0))
         print("y = ", float(y0))
         i += 1
-        #print(xmin)
-        #print(x0)
+
         dfdx0 = dfdx.subs([(x, float(x0)), (y, float(y0))])
         dfdy0 = dfdy.subs([(x, float(x0)), (y, float(y0))])
-        if dfdx0 == 0 and dfdy0 == 0:
+        print(x0/xant)
+        if x0/xant < 1.01 and x0/xant > 0.99:
             c = 0
-        #print(float(xant))
-        #print(float(x0))
+
         xant = x0
         yant = y0
-        
+        print("--- %s seconds ---" % (time.time() - start_time))
+
+#f = 100*((y - x**2)**2) + (1 - x)**2   #ex1
+#f = (x + 2*y - 7)**2 + (2*x + y - 5)**2 #ex2
 f = (((x-3)**2)/4 + ((y-2)**2)/9) + 13
-g = (x**2)/9 + (y**2)/16
+
+g = (x**2)/9 + (y**2)/16 #ex 1
+#g = (y - (x - 2)**3 - (x**2) - 10) #ex 2
 print(type(f))
 x0 = 4
 y0 = 4
-
+g = 0
 gradient(f, g, x0, y0)
 
 t = linspace(0,90,90)

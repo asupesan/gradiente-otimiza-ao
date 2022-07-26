@@ -20,15 +20,15 @@ def plot3d():
     axRos = figRos.gca(projection='3d')
 
     # Evaluate function
-    X = np.arange(-2, 2, 0.15)
-    Y = np.arange(-1, 3, 0.15)
+    X = np.arange(-3, 3, 0.15)
+    Y = np.arange(-4, 4, 0.15)
     X, Y = np.meshgrid(X, Y)
     Z = f(X,Y)
 
     # Plot the surface
     surf = axRos.plot_surface(X, Y, Z, cmap=cm.gist_heat_r,
                         linewidth=0, antialiased=False)
-    axRos.set_zlim(0, 2000)
+    axRos.set_zlim(0, 4000)
     figRos.colorbar(surf, shrink=0.5, aspect=10) 
     plot2d(X, Y, Z)
 

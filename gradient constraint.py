@@ -31,7 +31,7 @@ def gradient(f, g, x0, y0):
     
     while c != 0:
         print("-----------------------------", i,"-----------------------------")
-        u = sp.Symbol('u')
+        # u = sp.Symbol('u')
         u = 0.5
         f = f + u*g
         print(f)

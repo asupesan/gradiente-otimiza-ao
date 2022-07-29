@@ -101,7 +101,7 @@ def plot2d2(X, Y, Z):
     plt.figure(figsize=(12, 7))
     plt.contour(X,Y,Z,200)
     plt.plot([x0[0]],[x0[1]],marker='o',markersize=15, color ='r')
-    # ellipse
+    # FALTA ARRUMA O PLOT DA RESTRIÇAO 2D
     
     el_x = linspace(0, 0) 
     el_y = linspace(2, 41)
